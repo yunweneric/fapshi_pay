@@ -3,12 +3,12 @@
 </p>
   <p align="center">Welcome to <a href="https://fapshi.com/" target="_blank"> The Fapshi Flutter SDK </a>Simplified Payments for the internet</p>
     <p align="center">
-<a href="https://github.com/ndemeyvan/pay_unit_sdk" target="_blank"><img alt="Pub Version" src="https://img.shields.io/pub/v/pay_unit_sdk?color=%233F51B5&style=for-the-badge" ></a>
-<a><img alt="GitHub repo size" src="https://img.shields.io/github/repo-size/ndemeyvan/pay_unit_sdk?color=%233F51B5&style=for-the-badge"></a>
-<a><img alt="GitHub issues" src="https://img.shields.io/github/issues-raw/ndemeyvan/pay_unit_sdk?color=%233F51B5&style=for-the-badge"></a>
-<a href="" target="_blank"><img alt="GitHub Repo stars" src="https://img.shields.io/github/stars/ndemeyvan/pay_unit_sdk?color=%233F51B5&style=for-the-badge"></a>
-<a><img alt="GitHub forks" src="https://img.shields.io/github/forks/ndemeyvan/pay_unit_sdk?color=%233F51B5&style=for-the-badge"></a>
-<a><img alt="GitHub code size in bytes" src="https://img.shields.io/github/languages/code-size/ndemeyvan/pay_unit_sdk?color=%233F51B5&style=for-the-badge"></a>
+<a href="https://github.com/yunweneric/fapshi_pay" target="_blank"><img alt="Pub Version" src="https://img.shields.io/pub/v/pay_unit_sdk?color=%233F51B5&style=for-the-badge" ></a>
+<a><img alt="GitHub repo size" src="https://img.shields.io/github/repo-size/yunweneric/fapshi_pay?color=%233F51B5&style=for-the-badge"></a>
+<a><img alt="GitHub issues" src="https://img.shields.io/github/issues-raw/yunweneric/fapshi_pay?color=%233F51B5&style=for-the-badge"></a>
+<a href="" target="_blank"><img alt="GitHub Repo stars" src="https://img.shields.io/github/stars/yunweneric/fapshi_pay?color=%233F51B5&style=for-the-badge"></a>
+<a><img alt="GitHub forks" src="https://img.shields.io/github/forks/yunweneric/fapshi_pay?color=%233F51B5&style=for-the-badge"></a>
+<a><img alt="GitHub code size in bytes" src="https://img.shields.io/github/languages/code-size/yunweneric/fapshi_pay?color=%233F51B5&style=for-the-badge"></a>
 <a href = "https://fapshi.com/"><img alt="Website" src="https://img.shields.io/website?color=%233F51B5&style=for-the-badge&up_color=3F51B5&up_message=Visit%20us&url=https%3A%2F%2Fpayunit.net%2Fdocs%2F"></a>
 <a><img alt="Twitter Follow" src="https://img.shields.io/twitter/follow/payunit7?color=%233F51B5&&style=for-the-badge"></a>
 
