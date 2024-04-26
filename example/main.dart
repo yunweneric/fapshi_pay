@@ -1,21 +1,13 @@
 import 'package:fapshi_pay/fapshi_pay.dart';
 import 'package:flutter/material.dart';
 
-main() {
-  runApp(const DemoApp());
-}
+main() => runApp(const DemoApp());
 
 class DemoApp extends StatelessWidget {
   const DemoApp({super.key});
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Fapshi Payment',
-      theme: ThemeData(
-          colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-          useMaterial3: true),
-      home: const HomePage(),
-    );
+    return const MaterialApp(title: 'Fapshi Payment', home: HomePage());
   }
 }
 
@@ -41,7 +33,7 @@ class _HomePageState extends State<HomePage> {
             liveApiUser: '',
             title: "Pay now",
             amount: 3000,
-            phone: "670912935",
+            phone: "67xxxxxxxx",
             icon: const Icon(Icons.payment),
             shouldCheckPaymentStatus: true,
             onPayComplete: (paymentResponse) {},

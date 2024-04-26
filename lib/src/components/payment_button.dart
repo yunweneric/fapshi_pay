@@ -21,7 +21,7 @@ class FapshiPaymentButton extends StatefulWidget {
 
   /// An optional icon widget to be displayed alongside the title.
 
-  final Widget? button;
+  final Widget? child;
 
   /// An optional widget that can be used instead of a title. This is useful when you need a custom widget for the button.
 
@@ -32,10 +32,6 @@ class FapshiPaymentButton extends StatefulWidget {
   final ButtonStyle? buttonStyle;
 
   /// The style of the button widget.
-
-  final VoidCallback? onPressed;
-
-  /// A callback function that will be invoked when the button is pressed.
 
   final int amount;
 
@@ -49,12 +45,10 @@ class FapshiPaymentButton extends StatefulWidget {
 
   /// A callback function that will be invoked when the payment is completed successfully.
 
-  final void Function(PaymentStatusResponseModel paymentResponse)?
-      onCheckPaymentSuccess;
+  final void Function(PaymentStatusResponseModel paymentResponse)? onCheckPaymentSuccess;
 
   /// A callback function that will be invoked when checking payment status is successful.
-  final void Function(PaymentStatusResponseModel paymentResponse)?
-      onCheckPaymentFailed;
+  final void Function(PaymentStatusResponseModel paymentResponse)? onCheckPaymentFailed;
 
   /// A callback function that will be invoked when checking payment status fails.
 
@@ -112,8 +106,6 @@ class FapshiPaymentButton extends StatefulWidget {
     this.icon,
     this.buttonStyle,
     this.textStyle,
-    this.button,
-    this.onPressed,
     required this.amount,
     required this.phone,
     this.onPayComplete,
@@ -126,6 +118,7 @@ class FapshiPaymentButton extends StatefulWidget {
     this.shouldCheckPaymentStatus = true,
     this.isIconLeading,
     this.canClosePreloader,
+    this.child,
     required this.env,
     required this.sandboxApiUser,
     required this.sandboxApiKey,
@@ -160,11 +153,8 @@ class _FapshiPaymentButtonState extends State<FapshiPaymentButton> {
     Map<String, String> headers() {
       return {
         'Content-Type': 'application/json',
-        "apiuser": widget.env == AppEnv.DEV
-            ? widget.sandboxApiUser
-            : widget.liveApiUser,
-        "apikey":
-            widget.env == AppEnv.DEV ? widget.sandboxApiKey : widget.liveApiKey,
+        "apiuser": widget.env == AppEnv.DEV ? widget.sandboxApiUser : widget.liveApiUser,
+        "apikey": widget.env == AppEnv.DEV ? widget.sandboxApiKey : widget.liveApiKey,
       };
     }
 
@@ -187,8 +177,7 @@ class _FapshiPaymentButtonState extends State<FapshiPaymentButton> {
     dio().interceptors.addAll([LogInterceptor()]);
 
     // Creating a stream controller for payment status updates
-    StreamController<PaymentStatusResponseModel> paymentController =
-        StreamController.broadcast();
+    StreamController<PaymentStatusResponseModel> paymentController = StreamController.broadcast();
 
     // Creating a payment service instance
     PaymentService paymentService = PaymentService(http: dio());
@@ -208,10 +197,7 @@ class _FapshiPaymentButtonState extends State<FapshiPaymentButton> {
       bloc: paymentBloc,
       listener: (context, state) {
         if (state is DirectPaymentInitial) {
-          widget.initialLoadingUI == null
-              ? AppBottomSheet.loadingSheet(context,
-                  isDismissible: widget.canClosePreloader)
-              : widget.initialLoadingUI!();
+          widget.initialLoadingUI == null ? AppBottomSheet.loadingSheet(context, isDismissible: widget.canClosePreloader) : widget.initialLoadingUI!();
         }
         if (state is DirectPaymentError) {
           if (widget.errorUI == null) {
@@ -225,17 +211,16 @@ class _FapshiPaymentButtonState extends State<FapshiPaymentButton> {
           if (widget.shouldCheckPaymentStatus == true) {
             if (widget.errorUI == null) {
               if (widget.initialLoadingUI == null) Navigator.pop(context);
-              AppBottomSheet.loadingSheet(context,
-                  loadingText: "Checking payment status!",
-                  isDismissible: widget.canClosePreloader);
+              AppBottomSheet.loadingSheet(context, loadingText: "Checking payment status!", isDismissible: widget.canClosePreloader);
             } else {
               widget.checkPaymentLoadingUI!();
             }
           } else {
             Navigator.pop(context);
           }
-          if (widget.onPayComplete != null)
+          if (widget.onPayComplete != null) {
             widget.onPayComplete!(state.response);
+          }
         }
 
         if (state is CheckPaymentStatusError) {
@@ -245,8 +230,9 @@ class _FapshiPaymentButtonState extends State<FapshiPaymentButton> {
           } else {
             widget.errorUI!(state.message);
           }
-          if (widget.onCheckPaymentFailed != null)
+          if (widget.onCheckPaymentFailed != null) {
             widget.onCheckPaymentFailed!(state.response);
+          }
         }
         if (state is CheckPaymentStatusSuccess) {
           if (widget.successUI == null) {
@@ -255,47 +241,54 @@ class _FapshiPaymentButtonState extends State<FapshiPaymentButton> {
           } else {
             widget.successUI!(state.response);
           }
-          if (widget.onCheckPaymentSuccess != null)
+          if (widget.onCheckPaymentSuccess != null) {
             widget.onCheckPaymentSuccess!(state.response);
+          }
         }
       },
       builder: (context, state) {
         return Container(
-          child: widget.button ??
-              ElevatedButton(
-                style: widget.buttonStyle ??
-                    ElevatedButton.styleFrom(
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10))),
-                onPressed: () {
-                  if (widget.onPressed == null) {
+          child: widget.child != null
+              ? optionalWidget(widget.child!)
+              : ElevatedButton(
+                  style: widget.buttonStyle ?? ElevatedButton.styleFrom(shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10))),
+                  onPressed: () {
                     paymentBloc.add(
                       DirectPaymentEvent(
-                        model: DirectPayRequestModel(
-                            amount: widget.amount, phone: widget.phone),
-                        shouldCheckPaymentStatus:
-                            widget.shouldCheckPaymentStatus,
+                        model: DirectPayRequestModel(amount: widget.amount, phone: widget.phone),
+                        shouldCheckPaymentStatus: widget.shouldCheckPaymentStatus,
                       ),
                     );
-                  } else {
-                    widget.onPressed!();
-                  }
-                },
-                child: Builder(builder: (context) {
-                  List<Widget> widgets = [
-                    if (widget.title != null)
-                      Text(widget.title!, style: widget.textStyle),
-                    if (widget.icon != null) const SizedBox(width: 10),
-                    if (widget.icon != null) widget.icon!,
-                  ];
-                  return Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: widget.isIconLeading == true
-                        ? widgets.reversed.toList()
-                        : widgets,
-                  );
-                }),
-              ),
+                  },
+                  child: Builder(
+                    builder: (context) {
+                      List<Widget> widgets = [
+                        if (widget.title != null) Text(widget.title!, style: widget.textStyle),
+                        if (widget.icon != null) const SizedBox(width: 10),
+                        if (widget.icon != null) widget.icon!,
+                      ];
+                      return Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: widget.isIconLeading == true ? widgets.reversed.toList() : widgets,
+                      );
+                    },
+                  ),
+                ),
+        );
+      },
+    );
+  }
+
+  optionalWidget(Widget child) {
+    return GestureDetector(
+      behavior: HitTestBehavior.opaque,
+      child: child,
+      onTap: () {
+        paymentBloc.add(
+          DirectPaymentEvent(
+            model: DirectPayRequestModel(amount: widget.amount, phone: widget.phone),
+            shouldCheckPaymentStatus: widget.shouldCheckPaymentStatus,
+          ),
         );
       },
     );
