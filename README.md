@@ -1,5 +1,5 @@
 <p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="./fapshi.svg" width="320" alt="Nest Logo" /></a>
+  <a href="http://fapshi.com/" target="blank"><img src="./fapshi.svg" width="320" alt="Fapshi Logo" /></a>
 </p>
   <p align="center">Welcome to <a href="https://fapshi.com/" target="_blank"> The Fapshi Flutter SDK </a>Simplified Payments for the internet</p>
     <p align="center">
