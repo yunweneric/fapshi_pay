@@ -52,7 +52,7 @@ import 'package:fapshi_pay/fapshi_pay.dart';
 
 ```dart
       FapshiPay(
-            env: AppEnv.DEV,
+            env: AppEnv.dev,
             sandboxApiKey: '',
             sandboxApiUser: '',
             liveApiKey: '',

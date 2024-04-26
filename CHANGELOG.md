@@ -1,4 +1,12 @@
-## 0.1.3
+## 0.1.2
+
+- Format files using dart format .
+
+## 0.1.1
+
+- Fix all lint errors and warnings
+
+## 0.1.0
 
 - Added an optional child property for users to customize their payment widget
 - Updated the README file for the documentation

@@ -1,6 +1,6 @@
 name: fapshi_pay
 description: "An Unofficial payment sdk for fapshi API for seamless payments. Build with ❤️ for fun and contribution to the open source community!"
-version: 0.1.3
+version: 0.1.2
 homepage: https://github.com/yunweneric/fapshi_pay
 
 environment:

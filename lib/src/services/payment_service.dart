@@ -13,8 +13,9 @@ class PaymentService {
   Future<Map<String, dynamic>> initiatePay(
       InitializePaymentRequest data) async {
     //* Check if 'amount' is greater than or equal to 100
-    if (data.amount < 100)
+    if (data.amount < 100) {
       throw AppException(message: 'amount cannot be less than 100 XAF');
+    }
     try {
       //* Make the POST request
       Response response = await _http.post(
@@ -35,11 +36,13 @@ class PaymentService {
 
   Future<Map<String, dynamic>> directPay(DirectPayRequestModel data) async {
     try {
-      if (data.amount < 100)
+      if (data.amount < 100) {
         throw AppException(message: 'amount cannot be less than 100 XAF');
+      }
 
-      if (!RegExp(r'^6[\d]{8}$').hasMatch(data.phone))
+      if (!RegExp(r'^6[\d]{8}$').hasMatch(data.phone)) {
         throw AppException(message: 'Invalid phone number');
+      }
 
       Response response = await _http.post(
         '/direct-pay',

@@ -26,7 +26,7 @@ class _HomePageState extends State<HomePage> {
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20),
           child: FapshiPay(
-            env: AppEnv.DEV,
+            env: AppEnv.dev,
             sandboxApiKey: '',
             sandboxApiUser: '',
             liveApiKey: '',

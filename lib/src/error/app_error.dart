@@ -5,6 +5,6 @@ class AppException implements Exception {
   AppException({required this.message, this.data});
 
   Map<String, dynamic> toJson() {
-    return {message: this.message, data: this.data};
+    return {message: message, data: data};
   }
 }

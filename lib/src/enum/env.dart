@@ -1,1 +1,1 @@
-enum AppEnv { PROD, DEV }
+enum AppEnv { prod, dev }

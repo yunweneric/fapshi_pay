@@ -60,8 +60,9 @@ class PaymentBloc extends Bloc<PaymentEvent, PaymentState> {
         emit(DirectPaymentInitial());
         final response =
             await _paymentRepository.directPayment(data: event.model);
-        if (event.shouldCheckPaymentStatus == true)
+        if (event.shouldCheckPaymentStatus == true) {
           add(CheckPaymentStatusEvent(transactionId: response.transId!));
+        }
         emit(DirectPaymentSuccess(response));
       } catch (e) {
         AppException error = e as AppException;

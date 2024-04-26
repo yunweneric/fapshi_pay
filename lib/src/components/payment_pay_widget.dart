@@ -155,18 +155,18 @@ class _FapshiPaymentButtonState extends State<FapshiPay> {
     Map<String, String> headers() {
       return {
         'Content-Type': 'application/json',
-        "apiuser": widget.env == AppEnv.DEV
+        "apiuser": widget.env == AppEnv.dev
             ? widget.sandboxApiUser
             : widget.liveApiUser,
         "apikey":
-            widget.env == AppEnv.DEV ? widget.sandboxApiKey : widget.liveApiKey,
+            widget.env == AppEnv.dev ? widget.sandboxApiKey : widget.liveApiKey,
       };
     }
 
     // Function to create a Dio instance with configured options
     Dio dio() {
       final options = BaseOptions(
-        baseUrl: widget.env == AppEnv.DEV ? devBaseUrl : baseUrl,
+        baseUrl: widget.env == AppEnv.dev ? devBaseUrl : baseUrl,
         connectTimeout: const Duration(seconds: 5),
         receiveTimeout: const Duration(seconds: 3),
         headers: headers(),
