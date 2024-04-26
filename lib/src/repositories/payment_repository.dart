@@ -12,28 +12,36 @@ class PaymentRepository {
   final PaymentService _paymentService;
   int count = 0;
 
-  PaymentRepository({required PaymentService paymentService}) : _paymentService = paymentService;
+  PaymentRepository({required PaymentService paymentService})
+      : _paymentService = paymentService;
 
-  Future<InitializePaymentResponseModel> initializePayment({required InitializePaymentRequest data}) async {
+  Future<InitializePaymentResponseModel> initializePayment(
+      {required InitializePaymentRequest data}) async {
     Map<String, dynamic> response = await _paymentService.initiatePay(data);
     return InitializePaymentResponseModel.fromJson(response);
   }
 
-  Future<DirectPayResponseModel> directPayment({required DirectPayRequestModel data}) async {
+  Future<DirectPayResponseModel> directPayment(
+      {required DirectPayRequestModel data}) async {
     Map<String, dynamic> response = await _paymentService.directPay(data);
     return DirectPayResponseModel.fromJson(response);
   }
 
-  Future<PaymentStatusResponseModel> checkPaymentStatus({required String transactionId}) async {
-    Map<String, dynamic> response = await _paymentService.paymentStatus(transactionId);
+  Future<PaymentStatusResponseModel> checkPaymentStatus(
+      {required String transactionId}) async {
+    Map<String, dynamic> response =
+        await _paymentService.paymentStatus(transactionId);
     return PaymentStatusResponseModel.fromJson(response);
   }
 
-  Future<void> reIterateCheckPaymentController(String transactionId, StreamController<PaymentStatusResponseModel> controller) async {
+  Future<void> reIterateCheckPaymentController(String transactionId,
+      StreamController<PaymentStatusResponseModel> controller) async {
     Timer.periodic(const Duration(seconds: 10), (time) async {
       try {
         final res = await checkPaymentStatus(transactionId: transactionId);
-        if (res.status == PaymentStatus.expired || res.status == PaymentStatus.failed || res.status == PaymentStatus.successful) {
+        if (res.status == PaymentStatus.expired ||
+            res.status == PaymentStatus.failed ||
+            res.status == PaymentStatus.successful) {
           count = 0;
           time.cancel();
           controller.add(res);
@@ -47,7 +55,8 @@ class PaymentRepository {
       } catch (e) {
         count = 0;
         time.cancel();
-        controller.add(PaymentStatusResponseModel.empty().copyWith(status: PaymentStatus.expired));
+        controller.add(PaymentStatusResponseModel.empty()
+            .copyWith(status: PaymentStatus.expired));
       }
     });
   }

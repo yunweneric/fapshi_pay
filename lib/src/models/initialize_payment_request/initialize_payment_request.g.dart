@@ -6,7 +6,9 @@ part of 'initialize_payment_request.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-InitializePaymentRequest _$InitializePaymentRequestFromJson(Map<String, dynamic> json) => InitializePaymentRequest(
+InitializePaymentRequest _$InitializePaymentRequestFromJson(
+        Map<String, dynamic> json) =>
+    InitializePaymentRequest(
       amount: json['amount'] as int,
       email: json['email'] as String?,
       userId: json['userId'] as String?,
@@ -15,7 +17,9 @@ InitializePaymentRequest _$InitializePaymentRequestFromJson(Map<String, dynamic>
       message: json['message'] as String?,
     );
 
-Map<String, dynamic> _$InitializePaymentRequestToJson(InitializePaymentRequest instance) => <String, dynamic>{
+Map<String, dynamic> _$InitializePaymentRequestToJson(
+        InitializePaymentRequest instance) =>
+    <String, dynamic>{
       'amount': instance.amount,
       'email': instance.email,
       'userId': instance.userId,

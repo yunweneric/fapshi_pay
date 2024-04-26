@@ -28,22 +28,27 @@ class PaymentBloc extends Bloc<PaymentEvent, PaymentState> {
     return super.close();
   }
 
-  PaymentBloc(this._paymentRepository, this._controller) : super(PaymentInitial()) {
+  PaymentBloc(this._paymentRepository, this._controller)
+      : super(PaymentInitial()) {
     on<ConcludePaymentStatusVerification>((event, emit) async {
       if (event.response.status == PaymentStatus.successful) {
         emit(CheckPaymentStatusSuccess(event.response));
       } else if (event.response.status == PaymentStatus.expired) {
-        emit(CheckPaymentStatusError(message: "Your payment has expired!", response: event.response));
+        emit(CheckPaymentStatusError(
+            message: "Your payment has expired!", response: event.response));
       } else if (event.response.status == PaymentStatus.failed) {
-        emit(CheckPaymentStatusError(message: "Your payment has failed!", response: event.response));
+        emit(CheckPaymentStatusError(
+            message: "Your payment has failed!", response: event.response));
       } else if (event.response.status == PaymentStatus.pending) {
-        emit(CheckPaymentStatusUpdate(message: "Your payment is pending!", response: event.response));
+        emit(CheckPaymentStatusUpdate(
+            message: "Your payment is pending!", response: event.response));
       }
     });
     on<InitiatePaymentEvent>((event, emit) async {
       try {
         emit(InitializePaymentInitial());
-        final response = await _paymentRepository.initializePayment(data: event.initModel);
+        final response =
+            await _paymentRepository.initializePayment(data: event.initModel);
         emit(InitializePaymentSuccess(response));
       } catch (e) {
         AppException error = e as AppException;
@@ -53,8 +58,10 @@ class PaymentBloc extends Bloc<PaymentEvent, PaymentState> {
     on<DirectPaymentEvent>((event, emit) async {
       try {
         emit(DirectPaymentInitial());
-        final response = await _paymentRepository.directPayment(data: event.model);
-        if (event.shouldCheckPaymentStatus == true) add(CheckPaymentStatusEvent(transactionId: response.transId!));
+        final response =
+            await _paymentRepository.directPayment(data: event.model);
+        if (event.shouldCheckPaymentStatus == true)
+          add(CheckPaymentStatusEvent(transactionId: response.transId!));
         emit(DirectPaymentSuccess(response));
       } catch (e) {
         AppException error = e as AppException;
@@ -63,7 +70,8 @@ class PaymentBloc extends Bloc<PaymentEvent, PaymentState> {
     });
     on<CheckPaymentStatusEvent>((event, emit) async {
       emit(CheckPaymentStatusInitial());
-      _paymentRepository.reIterateCheckPaymentController(event.transactionId, _controller);
+      _paymentRepository.reIterateCheckPaymentController(
+          event.transactionId, _controller);
       listenToController();
     });
   }

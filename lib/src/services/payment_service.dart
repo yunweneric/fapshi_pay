@@ -10,9 +10,11 @@ class PaymentService {
 
   PaymentService({required Dio http}) : _http = http;
 
-  Future<Map<String, dynamic>> initiatePay(InitializePaymentRequest data) async {
+  Future<Map<String, dynamic>> initiatePay(
+      InitializePaymentRequest data) async {
     //* Check if 'amount' is greater than or equal to 100
-    if (data.amount < 100) throw AppException(message: 'amount cannot be less than 100 XAF');
+    if (data.amount < 100)
+      throw AppException(message: 'amount cannot be less than 100 XAF');
     try {
       //* Make the POST request
       Response response = await _http.post(
@@ -22,7 +24,9 @@ class PaymentService {
       if (response.statusCode == 200 || response.statusCode == 201) {
         return response.data;
       } else {
-        throw AppException(message: response.data['message'] ?? response.statusMessage ?? "---");
+        throw AppException(
+            message:
+                response.data['message'] ?? response.statusMessage ?? "---");
       }
     } catch (e) {
       throw throwError(e);
@@ -31,9 +35,11 @@ class PaymentService {
 
   Future<Map<String, dynamic>> directPay(DirectPayRequestModel data) async {
     try {
-      if (data.amount < 100) throw AppException(message: 'amount cannot be less than 100 XAF');
+      if (data.amount < 100)
+        throw AppException(message: 'amount cannot be less than 100 XAF');
 
-      if (!RegExp(r'^6[\d]{8}$').hasMatch(data.phone)) throw AppException(message: 'Invalid phone number');
+      if (!RegExp(r'^6[\d]{8}$').hasMatch(data.phone))
+        throw AppException(message: 'Invalid phone number');
 
       Response response = await _http.post(
         '/direct-pay',
@@ -42,7 +48,9 @@ class PaymentService {
       if (response.statusCode == 200 || response.statusCode == 201) {
         return response.data;
       } else {
-        throw AppException(message: response.data['message'] ?? response.statusMessage ?? "---");
+        throw AppException(
+            message:
+                response.data['message'] ?? response.statusMessage ?? "---");
       }
     } catch (e) {
       throw throwError(e);
@@ -65,7 +73,9 @@ class PaymentService {
       if (response.statusCode == 200 || response.statusCode == 201) {
         return response.data;
       } else {
-        throw AppException(message: response.data['message'] ?? response.statusMessage ?? "---");
+        throw AppException(
+            message:
+                response.data['message'] ?? response.statusMessage ?? "---");
       }
     } catch (e) {
       throw throwError(e);

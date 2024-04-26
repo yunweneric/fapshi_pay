@@ -1,13 +1,19 @@
 import 'package:fapshi_pay/fapshi_pay.dart';
 import 'package:flutter/material.dart';
 
+main() {
+  runApp(const DemoApp());
+}
+
 class DemoApp extends StatelessWidget {
   const DemoApp({super.key});
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Fapshi Payment',
-      theme: ThemeData(colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple), useMaterial3: true),
+      theme: ThemeData(
+          colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+          useMaterial3: true),
       home: const HomePage(),
     );
   }

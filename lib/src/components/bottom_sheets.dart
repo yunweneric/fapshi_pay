@@ -30,7 +30,8 @@ class AppBottomSheet {
     );
   }
 
-  static loadingSheet(BuildContext context, {String? loadingText, bool? isDismissible}) {
+  static loadingSheet(BuildContext context,
+      {String? loadingText, bool? isDismissible}) {
     return baseSheet(
       context: context,
       isDismissible: isDismissible,
