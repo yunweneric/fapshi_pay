@@ -10,7 +10,6 @@
 <a><img alt="GitHub forks" src="https://img.shields.io/github/forks/yunweneric/fapshi_pay?color=%233F51B5&style=for-the-badge"></a>
 <a><img alt="GitHub code size in bytes" src="https://img.shields.io/github/languages/code-size/yunweneric/fapshi_pay?color=%233F51B5&style=for-the-badge"></a>
 <a href = "https://fapshi.com/"><img alt="Website" src="https://img.shields.io/website?color=%233F51B5&style=for-the-badge&up_color=3F51B5&up_message=Visit%20us&url=https%3A%2F%2Fpayunit.net%2Fdocs%2F"></a>
-<a><img alt="Twitter Follow" src="https://img.shields.io/twitter/follow/payunit7?color=%233F51B5&&style=for-the-badge"></a>
 
 </p>
 
