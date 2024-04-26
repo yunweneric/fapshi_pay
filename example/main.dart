@@ -25,7 +25,7 @@ class _HomePageState extends State<HomePage> {
       body: Center(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20),
-          child: FapshiPaymentButton(
+          child: FapshiPay(
             env: AppEnv.DEV,
             sandboxApiKey: '',
             sandboxApiUser: '',

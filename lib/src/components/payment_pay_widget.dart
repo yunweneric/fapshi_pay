@@ -12,7 +12,7 @@ import 'package:fapshi_pay/src/services/payment_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class FapshiPaymentButton extends StatefulWidget {
+class FapshiPay extends StatefulWidget {
   final String? title;
 
   /// The title of the payment button.
@@ -23,7 +23,7 @@ class FapshiPaymentButton extends StatefulWidget {
 
   final Widget? child;
 
-  /// An optional widget that can be used instead of a title. This is useful when you need a custom widget for the button.
+  /// An optional widget that can be used instead of the elevated button. This is useful when you need a custom widget for the button.
 
   final TextStyle? textStyle;
 
@@ -45,10 +45,12 @@ class FapshiPaymentButton extends StatefulWidget {
 
   /// A callback function that will be invoked when the payment is completed successfully.
 
-  final void Function(PaymentStatusResponseModel paymentResponse)? onCheckPaymentSuccess;
+  final void Function(PaymentStatusResponseModel paymentResponse)?
+      onCheckPaymentSuccess;
 
   /// A callback function that will be invoked when checking payment status is successful.
-  final void Function(PaymentStatusResponseModel paymentResponse)? onCheckPaymentFailed;
+  final void Function(PaymentStatusResponseModel paymentResponse)?
+      onCheckPaymentFailed;
 
   /// A callback function that will be invoked when checking payment status fails.
 
@@ -100,7 +102,7 @@ class FapshiPaymentButton extends StatefulWidget {
 
   /// The API key for the live environment.
 
-  const FapshiPaymentButton({
+  const FapshiPay({
     super.key,
     this.title,
     this.icon,
@@ -127,10 +129,10 @@ class FapshiPaymentButton extends StatefulWidget {
   });
 
   @override
-  State<FapshiPaymentButton> createState() => _FapshiPaymentButtonState();
+  State<FapshiPay> createState() => _FapshiPaymentButtonState();
 }
 
-class _FapshiPaymentButtonState extends State<FapshiPaymentButton> {
+class _FapshiPaymentButtonState extends State<FapshiPay> {
   late PaymentBloc paymentBloc;
 
   @override
@@ -153,8 +155,11 @@ class _FapshiPaymentButtonState extends State<FapshiPaymentButton> {
     Map<String, String> headers() {
       return {
         'Content-Type': 'application/json',
-        "apiuser": widget.env == AppEnv.DEV ? widget.sandboxApiUser : widget.liveApiUser,
-        "apikey": widget.env == AppEnv.DEV ? widget.sandboxApiKey : widget.liveApiKey,
+        "apiuser": widget.env == AppEnv.DEV
+            ? widget.sandboxApiUser
+            : widget.liveApiUser,
+        "apikey":
+            widget.env == AppEnv.DEV ? widget.sandboxApiKey : widget.liveApiKey,
       };
     }
 
@@ -177,7 +182,8 @@ class _FapshiPaymentButtonState extends State<FapshiPaymentButton> {
     dio().interceptors.addAll([LogInterceptor()]);
 
     // Creating a stream controller for payment status updates
-    StreamController<PaymentStatusResponseModel> paymentController = StreamController.broadcast();
+    StreamController<PaymentStatusResponseModel> paymentController =
+        StreamController.broadcast();
 
     // Creating a payment service instance
     PaymentService paymentService = PaymentService(http: dio());
@@ -197,7 +203,10 @@ class _FapshiPaymentButtonState extends State<FapshiPaymentButton> {
       bloc: paymentBloc,
       listener: (context, state) {
         if (state is DirectPaymentInitial) {
-          widget.initialLoadingUI == null ? AppBottomSheet.loadingSheet(context, isDismissible: widget.canClosePreloader) : widget.initialLoadingUI!();
+          widget.initialLoadingUI == null
+              ? AppBottomSheet.loadingSheet(context,
+                  isDismissible: widget.canClosePreloader)
+              : widget.initialLoadingUI!();
         }
         if (state is DirectPaymentError) {
           if (widget.errorUI == null) {
@@ -211,7 +220,9 @@ class _FapshiPaymentButtonState extends State<FapshiPaymentButton> {
           if (widget.shouldCheckPaymentStatus == true) {
             if (widget.errorUI == null) {
               if (widget.initialLoadingUI == null) Navigator.pop(context);
-              AppBottomSheet.loadingSheet(context, loadingText: "Checking payment status!", isDismissible: widget.canClosePreloader);
+              AppBottomSheet.loadingSheet(context,
+                  loadingText: "Checking payment status!",
+                  isDismissible: widget.canClosePreloader);
             } else {
               widget.checkPaymentLoadingUI!();
             }
@@ -251,25 +262,33 @@ class _FapshiPaymentButtonState extends State<FapshiPaymentButton> {
           child: widget.child != null
               ? optionalWidget(widget.child!)
               : ElevatedButton(
-                  style: widget.buttonStyle ?? ElevatedButton.styleFrom(shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10))),
+                  style: widget.buttonStyle ??
+                      ElevatedButton.styleFrom(
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10))),
                   onPressed: () {
                     paymentBloc.add(
                       DirectPaymentEvent(
-                        model: DirectPayRequestModel(amount: widget.amount, phone: widget.phone),
-                        shouldCheckPaymentStatus: widget.shouldCheckPaymentStatus,
+                        model: DirectPayRequestModel(
+                            amount: widget.amount, phone: widget.phone),
+                        shouldCheckPaymentStatus:
+                            widget.shouldCheckPaymentStatus,
                       ),
                     );
                   },
                   child: Builder(
                     builder: (context) {
                       List<Widget> widgets = [
-                        if (widget.title != null) Text(widget.title!, style: widget.textStyle),
+                        if (widget.title != null)
+                          Text(widget.title!, style: widget.textStyle),
                         if (widget.icon != null) const SizedBox(width: 10),
                         if (widget.icon != null) widget.icon!,
                       ];
                       return Row(
                         mainAxisAlignment: MainAxisAlignment.center,
-                        children: widget.isIconLeading == true ? widgets.reversed.toList() : widgets,
+                        children: widget.isIconLeading == true
+                            ? widgets.reversed.toList()
+                            : widgets,
                       );
                     },
                   ),
@@ -286,7 +305,8 @@ class _FapshiPaymentButtonState extends State<FapshiPaymentButton> {
       onTap: () {
         paymentBloc.add(
           DirectPaymentEvent(
-            model: DirectPayRequestModel(amount: widget.amount, phone: widget.phone),
+            model: DirectPayRequestModel(
+                amount: widget.amount, phone: widget.phone),
             shouldCheckPaymentStatus: widget.shouldCheckPaymentStatus,
           ),
         );

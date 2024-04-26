@@ -51,7 +51,7 @@ import 'package:fapshi_pay/fapshi_pay.dart';
 2. Add the FapshiPay Widget and use:
 
 ```dart
-      FapshiPaymentButton(
+      FapshiPay(
             env: AppEnv.DEV,
             sandboxApiKey: '',
             sandboxApiUser: '',
