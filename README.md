@@ -49,16 +49,24 @@ $ flutter pub get
 import 'package:fapshi_pay/fapshi_pay.dart';
 ```
 
-2. Initialize the SDK with your API keys:
+2. Add the FapshiPay Widget and use:
 
 ```dart
-PaymentSdk.initialize(apiKey: 'YOUR_API_KEY');
-```
-
-3. Use the provided methods to initiate payment transactions with different payment methods:
-
-```dart
-PaymentSdk.payWithCard(amount: 100, currency: 'USD', card: cardDetails);
+      FapshiPaymentButton(
+            env: AppEnv.DEV,
+            sandboxApiKey: '',
+            sandboxApiUser: '',
+            liveApiKey: '',
+            liveApiUser: '',
+            title: "Pay now",
+            amount: 3000,
+            phone: "67xxxxxx",
+            icon: const Icon(Icons.payment),
+            shouldCheckPaymentStatus: true,
+            onPayComplete: (paymentResponse) {},
+            onCheckPaymentFailed: (paymentResponse) {},
+            onCheckPaymentSuccess: (paymentResponse) {},
+          ),
 ```
 
 ### Contribution Guide
@@ -68,7 +76,7 @@ We welcome contributions from the community to make this SDK better! To contribu
 1. Fork the repository and clone it to your local machine:
 
 ```bash
-$ git clone https://github.com/yourusername/fapshi_pay.git
+$ https://github.com/yunweneric/fapshi_pay
 ```
 
 2. Create a new branch for your changes:
@@ -105,7 +113,7 @@ This SDK is released under the MIT License. You can find the license details in 
 
 ### Support
 
-For any questions, issues, or feature requests, feel free to create an issue in this repository or contact us at support@example.com.
+For any questions, issues, or feature requests, feel free to create an issue in this repository or contact us at yunweneric@gmail.com.
 
 ### Acknowledgements
 
